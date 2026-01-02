@@ -39,7 +39,9 @@ const AppSidebar = () => {
                     <SidebarMenuButton
                       asChild
                       className={
-                        pathname === nav.url ? "bg-[#E0E0E0]" : undefined
+                        pathname === nav.url
+                          ? "bg-customSidebar-active"
+                          : undefined
                       }
                     >
                       <Link to={nav.url}>
@@ -55,7 +57,7 @@ const AppSidebar = () => {
                   ) : (
                     // Collapsible with submenu
                     <CollapsibleTrigger asChild>
-                      <SidebarMenuButton className='group/collapsible data-[state=open]:bg-[#E0E0E0]'>
+                      <SidebarMenuButton className='group/collapsible data-[state=open]:bg-customSidebar-active'>
                         {(() => {
                           const Icon = nav.icon;
                           return <Icon className='mr-2 h-4 w-4' />;
@@ -79,7 +81,7 @@ const AppSidebar = () => {
                             to={subNav.url}
                             className={`capitalize rounded-sm pl-2 ${
                               pathname === subNav.url
-                                ? "bg-[#E0E0E0]"
+                                ? "bg-customSidebar-active"
                                 : undefined
                             }`}
                           >
