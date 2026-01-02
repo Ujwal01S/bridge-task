@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "../ui/table";
 import { ScrollArea } from "../ui/scroll-area";
+import { TriangleAlert } from "lucide-react";
 
 interface IProps<TData, TValue> {
   table: TableType<TData>;
@@ -82,6 +83,18 @@ const DataTableRender = <TData, TValue>({
           </TableBody>
         </Table>
       </ScrollArea>
+      {/* fallback when all the column are hidden */}
+
+      {!table.getIsSomeColumnsVisible() && (
+        <div className='w-full flex items-center justify-center gap-2'>
+          <div>
+            <TriangleAlert color='red' size={24} />
+          </div>
+          <p className='font-semibold'>
+            All Column Visibility are off turn any Column Visibility{" "}
+          </p>
+        </div>
+      )}
     </div>
   );
 };

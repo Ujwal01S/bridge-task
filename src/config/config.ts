@@ -6,7 +6,9 @@ const envSchema = Z.object({
 
 const validateEnv = () => {
   try {
-    return envSchema.parse(import.meta.env);
+    return envSchema.parse({
+      BASE_URL: import.meta.env.VITE_BASE_URL,
+    });
   } catch (error) {
     console.log({ error: error });
     throw new Error("Enviroment validation failed");

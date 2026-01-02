@@ -7,6 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Separator } from "@radix-ui/react-separator";
 
 interface IProps<TData> {
   table: TableType<TData>;
@@ -21,7 +22,7 @@ const ViewOptions = <TData,>({ table }: IProps<TData>) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline'>
+        <Button variant='outline' className='w-fit'>
           {isAnyColumnHidden} columns <ChevronDown />
         </Button>
       </DropdownMenuTrigger>
@@ -42,6 +43,24 @@ const ViewOptions = <TData,>({ table }: IProps<TData>) => {
               </DropdownMenuCheckboxItem>
             );
           })}
+        <div className='flex items-center space-x-2 border-t-2 border-gray-400'>
+          <Button
+            variant='ghost'
+            onClick={() => table.toggleAllColumnsVisible(true)}
+          >
+            Show All
+          </Button>
+          <Separator
+            orientation='vertical'
+            className='data-[orientation=vertical]:w-[1.2px] data-[orientation=vertical]:h-5  bg-gray-400 dark:bg-white'
+          />
+          <Button
+            variant='ghost'
+            onClick={() => table.toggleAllColumnsVisible(false)}
+          >
+            Hide All
+          </Button>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
