@@ -1,0 +1,89 @@
+import {
+  flexRender,
+  type ColumnDef,
+  type Table as TableType,
+} from "@tanstack/react-table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
+import { ScrollArea } from "../ui/scroll-area";
+
+interface IProps<TData, TValue> {
+  table: TableType<TData>;
+  columns: ColumnDef<TData, TValue>[];
+}
+
+export function EmptyTableRow({ colLength }: { colLength: number }) {
+  return (
+    <TableRow>
+      <TableCell colSpan={colLength} className='h-24 text-center'>
+        No Results
+      </TableCell>
+    </TableRow>
+  );
+}
+
+const DataTableRender = <TData, TValue>({
+  table,
+  columns,
+}: IProps<TData, TValue>) => {
+  return (
+    <div className='flex'>
+      <ScrollArea type='always' className='w-1 flex-1'>
+        <Table>
+          {/* Table header content */}
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+
+          {/* Table Body Part */}
+
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className='border-gray-400'
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <EmptyTableRow colLength={columns.length} />
+            )}
+          </TableBody>
+        </Table>
+      </ScrollArea>
+    </div>
+  );
+};
+
+export default DataTableRender;
