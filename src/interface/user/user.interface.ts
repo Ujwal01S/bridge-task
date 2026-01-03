@@ -78,3 +78,8 @@ export interface IUser {
 export interface IUsersApiResponse extends IMeta {
   users: IUser[];
 }
+
+export type IPickedUser = Pick<
+  IUser,
+  "id" | "firstName" | "lastName" | "email" | "age" | "address"
+>;

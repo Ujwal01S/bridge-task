@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import type { IUser } from "@/interface/user/user.interface";
+import type { IPickedUser } from "@/interface/user/user.interface";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
 import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Edit2, Trash2 } from "lucide-react";
@@ -7,7 +7,7 @@ import { useMemo } from "react";
 
 export const useUserColumn = () => {
   const { setOpenDeleteDialog } = useDeleteDialogStore();
-  const columns: ColumnDef<IUser>[] = useMemo(
+  const columns: ColumnDef<IPickedUser>[] = useMemo(
     () => [
       {
         accessorKey: "id",
