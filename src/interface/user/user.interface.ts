@@ -44,7 +44,7 @@ export interface Crypto {
   network: string;
 }
 
-export interface User {
+export interface IUser {
   id: number;
   firstName: string;
   lastName: string;
@@ -76,5 +76,5 @@ export interface User {
 }
 
 export interface IUsersApiResponse extends IMeta {
-  users: User[];
+  users: IUser[];
 }

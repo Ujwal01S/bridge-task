@@ -1,6 +1,7 @@
 import RootLayout from "@/components/layout/layout";
 import { Spinner } from "@/components/ui/spinner";
-import { ROUTE } from "@/constants/route.constant";
+import { ROUTE } from "@/constants";
+
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router";
 

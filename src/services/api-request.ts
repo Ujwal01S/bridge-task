@@ -1,5 +1,6 @@
 import { config } from "@/config/config";
-import { HTTP_CODE } from "@/interface/error-status-http.enum";
+import { HTTP_CODE } from "@/interface";
+
 import type { IError } from "@/interface/response/error-response.interface";
 import { getErrorMessage } from "@/utils/error-message";
 import axios, { AxiosError, type AxiosResponse } from "axios";
