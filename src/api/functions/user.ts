@@ -1,11 +1,12 @@
-import type { IUser, IUsersApiResponse } from "@/interface";
+import type { IUpdateUserPayload, IUser, IUsersApiResponse } from "@/interface";
 import { getUserUrls, type IGetUserOptions } from "../urls/user";
 import api from "@/services/api-request";
 
 interface IGetUserFn {
   getAllUsers: (options?: IGetUserOptions) => Promise<IUsersApiResponse>;
+  createUser: (payload: IUpdateUserPayload) => Promise<IUser>;
   deleteUser: (id: number) => Promise<boolean>;
-  updateUser: (id: number, payload: Partial<IUser>) => Promise<IUser>;
+  updateUser: (id: number, payload: IUpdateUserPayload) => Promise<IUser>;
 }
 
 export const getUserFn: IGetUserFn = {
@@ -13,6 +14,12 @@ export const getUserFn: IGetUserFn = {
     const url = getUserUrls.getAllUser(options);
     const response = await api.get(url);
 
+    return response.data;
+  },
+
+  createUser: async (payload) => {
+    const url = getUserUrls.createUser();
+    const response = await api.post(url, payload);
     return response.data;
   },
 

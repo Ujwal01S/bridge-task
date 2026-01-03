@@ -83,3 +83,7 @@ export type IPickedUser = Pick<
   IUser,
   "id" | "firstName" | "lastName" | "email" | "age" | "address"
 >;
+
+export type IUpdateUserPayload = Omit<Partial<IUser>, "address"> & {
+  address?: Partial<Address>;
+};

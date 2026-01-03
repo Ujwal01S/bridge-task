@@ -39,7 +39,7 @@ const DeleteDialog = ({
           </Button>
           <Button variant='destructive' onClick={onDelete} disabled={loading}>
             {loading ? (
-              <div className='flex gap-2'>
+              <div className='flex gap-2 items-center'>
                 <Spinner /> Deleting...
               </div>
             ) : (

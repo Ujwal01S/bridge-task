@@ -3,4 +3,6 @@ export interface INotificationMessage {
   readonly DELETE_FAILED: string;
   readonly UPDATE_SUCCESS: string;
   readonly UPDATE_FAILED: string;
+  readonly CREATE_FAILED: string;
+  readonly CREATE_SUCCESS: string;
 }
