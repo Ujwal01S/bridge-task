@@ -1,5 +1,5 @@
 import type { IUserQueryKeys } from "@/interface";
 
-export const userQueryKey: IUserQueryKeys = {
+export const queryKey: IUserQueryKeys = {
   GET_USERS: "user",
 };

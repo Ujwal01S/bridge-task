@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import type { IUser } from "@/interface/user/user.interface";
+import { useDeleteDialogStore } from "@/store/use-dailog-store";
 import { type ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Edit2, Trash2 } from "lucide-react";
 import { useMemo } from "react";
 
 export const useUserColumn = () => {
+  const { setOpenDeleteDialog } = useDeleteDialogStore();
   const columns: ColumnDef<IUser>[] = useMemo(
     () => [
       {
@@ -71,6 +73,24 @@ export const useUserColumn = () => {
         cell: ({ row }) => (
           <div className='capitalize'>{row.getValue("email")}</div>
         ),
+      },
+      {
+        id: "actions",
+        enableHidding: true,
+        cell: ({ row }) => {
+          const id = row.original.id;
+          return (
+            <div className='flex gap-1.5'>
+              <button onClick={() => setOpenDeleteDialog(id)}>
+                <Trash2 className='text-red-400' />
+              </button>
+
+              <button>
+                <Edit2 className='text-blue-500' />
+              </button>
+            </div>
+          );
+        },
       },
     ],
     []

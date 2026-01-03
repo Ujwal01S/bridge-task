@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
+import { memo } from "react";
 
 interface IProps {
   total: number;
   isPending?: boolean;
 }
 
-const PaginationButton = ({ total }: IProps) => {
+const PaginationButton = memo(({ total }: IProps) => {
   const { limit, setSkip, skip } = usePaginationParams();
 
   const currentSkip = skip ?? 0;
@@ -37,6 +38,8 @@ const PaginationButton = ({ total }: IProps) => {
       </Button>
     </div>
   );
-};
+});
+
+PaginationButton.displayName = "PaginationButton";
 
 export default PaginationButton;

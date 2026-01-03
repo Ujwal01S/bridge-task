@@ -9,6 +9,7 @@ export interface IGetUserOptions {
 
 interface IGetUserUrls {
   getAllUser: (options?: any) => string;
+  deleteUser: (id: number) => string;
 }
 
 export const getUserUrls: IGetUserUrls = {
@@ -19,6 +20,11 @@ export const getUserUrls: IGetUserUrls = {
     const { route, ...rest } = options;
     const queryParams = buildQueryParams(rest);
     const url = route ? `users/${route}${queryParams}` : `users${queryParams}`;
+    return url;
+  },
+
+  deleteUser: (id) => {
+    const url = `users/${id}`;
     return url;
   },
 };
