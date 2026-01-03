@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+// creating this store to filter out deleted user when user data gets revalidate
+
 interface IDeletedUsersState {
   deletedUserIds: number[];
   addDeletedUser: (id: number) => void;
