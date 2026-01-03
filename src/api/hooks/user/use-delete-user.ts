@@ -6,8 +6,8 @@ import {
   successNotification,
 } from "@/utils/toast-notification";
 import { useMutation } from "@tanstack/react-query";
-import { getUserFn } from "../functions/user";
 import { useDeletedUsersStore } from "@/store/use-delete-user-store";
+import { getUserFn } from "@/api/functions/user/user";
 
 export const useDeleteUser = () => {
   const { closeDeleteDialog } = useDeleteDialogStore();

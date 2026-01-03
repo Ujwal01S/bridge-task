@@ -1,4 +1,4 @@
-import UserForm from "@/components/form/user-form";
+import UserForm from "@/components/form/user-form/user-form";
 import {
   Dialog,
   DialogContent,

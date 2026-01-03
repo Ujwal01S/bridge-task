@@ -1,14 +1,12 @@
-import { useDeleteUser } from "@/api/hooks/use-delete-user";
-import { useGetUser } from "@/api/hooks/use-get-user";
+import { useDeleteUser } from "@/api/hooks/user/use-delete-user";
+import { useGetUser } from "@/api/hooks/user/use-get-user";
 import DeleteDailog from "@/components/commons/delete-dailog/delete-dailog";
 import UserModal from "@/components/commons/user-modal";
 import UserTable from "@/components/home/user-table";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
-import { useDeletedUsersStore } from "@/store/use-delete-user-store";
 import { useUserModalStore } from "@/store/use-user-modal-store";
 
 const HomePage = () => {

@@ -6,8 +6,8 @@ import {
   successNotification,
 } from "@/utils/toast-notification";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getUserFn } from "../functions/user";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
+import { getUserFn } from "@/api/functions/user/user";
 
 export const useCreateUser = () => {
   const { limit, skip } = usePaginationParams();

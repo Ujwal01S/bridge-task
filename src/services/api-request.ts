@@ -16,15 +16,23 @@ const api = axios.create({
   },
 });
 
-// request interceptor add header if available
+// request interceptor
 
 api.interceptors.request.use(
   function (config) {
-    const token = localStorage.getItem("token");
+    const authStorage = localStorage.getItem("auth-storage");
 
-    if (token) {
-      const parsedToken = JSON.parse(token);
-      config.headers.Authorization = `Bearer ${parsedToken}`;
+    if (authStorage) {
+      try {
+        const parsedAuth = JSON.parse(authStorage);
+        const accessToken = parsedAuth?.state?.user?.accessToken;
+
+        if (accessToken) {
+          config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+      } catch (error) {
+        console.error("Error parsing auth token:", error);
+      }
     }
 
     return config;

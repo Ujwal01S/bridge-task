@@ -5,4 +5,6 @@ export interface INotificationMessage {
   readonly UPDATE_FAILED: string;
   readonly CREATE_FAILED: string;
   readonly CREATE_SUCCESS: string;
+  readonly LOGIN_SUCCESS: string;
+  readonly LOGIN_FAIL: string;
 }
