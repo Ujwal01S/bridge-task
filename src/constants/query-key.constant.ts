@@ -1,4 +1,4 @@
-import type { IUserQueryKeys } from "@/interface/query-key.interface";
+import type { IUserQueryKeys } from "@/interface";
 
 export const userQueryKey: IUserQueryKeys = {
   GET_USERS: "user",

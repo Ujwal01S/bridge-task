@@ -1,4 +1,4 @@
-import type { IError } from "@/interface/response/error-response.interface";
+import type { IError } from "@/interface";
 import type { AxiosError } from "axios";
 
 // extend error message to get single string error message

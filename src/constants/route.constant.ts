@@ -1,4 +1,4 @@
-import type { IRoute } from "@/interface/route.interface";
+import type { IRoute } from "@/interface";
 
 const Routes: IRoute = {
   USER_CREATE: "/create-user",

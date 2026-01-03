@@ -16,7 +16,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
 } from "../ui/sidebar";
-import { navigationData } from "@/constants/sidebar-navigation.constant";
+import { navigationData } from "@/constants";
 
 const AppSidebar = () => {
   const { pathname } = useLocation();

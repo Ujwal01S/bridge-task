@@ -1,80 +1,58 @@
 import { Button } from "@/components/ui/button";
+import type { IUser } from "@/interface/user/user.interface";
 import { type ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Trash2Icon } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { useMemo } from "react";
 
-export const dummyData: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@example.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@example.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@example.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@example.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@example.com",
-  },
-];
-export type Payment = {
-  id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
-};
 export const useUserColumn = () => {
-  const columns: ColumnDef<Payment>[] = useMemo(
+  const columns: ColumnDef<IUser>[] = useMemo(
     () => [
-      //   {
-      //     id: "select",
-      //     header: ({ table }) => (
-      //       <Checkbox
-      //         checked={
-      //           table.getIsAllPageRowsSelected() ||
-      //           (table.getIsSomePageRowsSelected() && "indeterminate")
-      //         }
-      //         onCheckedChange={(value) =>
-      //           table.toggleAllPageRowsSelected(!!value)
-      //         }
-      //         aria-label='Select all'
-      //       />
-      //     ),
-      //     cell: ({ row }) => (
-      //       <Checkbox
-      //         checked={row.getIsSelected()}
-      //         onCheckedChange={(value) => row.toggleSelected(!!value)}
-      //         aria-label='Select row'
-      //       />
-      //     ),
-      //     enableSorting: false,
-      //     enableHiding: false,
-      //   },
       {
-        accessorKey: "status",
-        header: "Status",
+        accessorKey: "id",
+        header: "ID",
         cell: ({ row }) => (
-          <div className='capitalize'>{row.getValue("status")}</div>
+          <div className='capitalize'>{row.getValue("id")}</div>
         ),
       },
+      {
+        accessorKey: "firstName",
+        header: ({ column }) => {
+          return (
+            <Button
+              variant='ghost'
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              First Name
+              <ArrowUpDown />
+            </Button>
+          );
+        },
+        cell: ({ row }) => (
+          <div className='capitalize'>{row.getValue("firstName")}</div>
+        ),
+      },
+      {
+        accessorKey: "lastName",
+        header: ({ column }) => {
+          return (
+            <Button
+              variant='ghost'
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+            >
+              Last Name
+              <ArrowUpDown />
+            </Button>
+          );
+        },
+        cell: ({ row }) => (
+          <div className='capitalize'>{row.getValue("lastName")}</div>
+        ),
+      },
+
       {
         accessorKey: "email",
         header: ({ column }) => {
@@ -91,21 +69,8 @@ export const useUserColumn = () => {
           );
         },
         cell: ({ row }) => (
-          <div className='lowercase'>{row.getValue("email")}</div>
+          <div className='capitalize'>{row.getValue("email")}</div>
         ),
-      },
-      {
-        accessorKey: "amount",
-        header: () => <div className='text-right'>Amount</div>,
-        cell: ({ row }) => {
-          const amount = parseFloat(row.getValue("amount"));
-          // Format the amount as a dollar amount
-          const formatted = new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-          }).format(amount);
-          return <div className='text-right font-medium'>{formatted}</div>;
-        },
       },
     ],
     []

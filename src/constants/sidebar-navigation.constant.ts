@@ -1,4 +1,4 @@
-import type { INaviationProps } from "@/interface/navigation.interface";
+import type { INaviationProps } from "@/interface";
 import { Users } from "lucide-react";
 
 export const navigationData: INaviationProps[] = [
