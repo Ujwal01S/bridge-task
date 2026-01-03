@@ -6,3 +6,4 @@ export * from "./route.interface";
 export * from "./response/error-response.interface";
 export * from "./user/user.interface";
 export * from "./general-constant.interface";
+export * from "./notification-message.interface";

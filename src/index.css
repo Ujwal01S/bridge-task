@@ -25,6 +25,25 @@ h5 {
   @apply text-lg md:text-xl lg:text-lg font-medium leading-normal;
 }
 
+/* Toast global style */
+.sonner-toast {
+  color: white !important;
+  font-size: 1rem !important;
+}
+
+.sonner-toast [data-description] {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 0.875rem !important;
+}
+
+.sonner-toast [data-button] {
+  background: transparent !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  font-size: 12px !important;
+  padding: 4px 8px !important;
+}
+
 @theme {
   /* sidebar color theme */
 

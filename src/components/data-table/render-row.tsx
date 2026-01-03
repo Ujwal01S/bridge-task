@@ -13,13 +13,14 @@ import {
 } from "../ui/table";
 import { ScrollArea } from "../ui/scroll-area";
 import { TriangleAlert } from "lucide-react";
+import { memo } from "react";
 
 interface IProps<TData, TValue> {
   table: TableType<TData>;
   columns: ColumnDef<TData, TValue>[];
 }
 
-export function EmptyTableRow({ colLength }: { colLength: number }) {
+export const EmptyTableRow = memo(({ colLength }: { colLength: number }) => {
   return (
     <TableRow>
       <TableCell colSpan={colLength} className='h-24 text-center'>
@@ -27,7 +28,9 @@ export function EmptyTableRow({ colLength }: { colLength: number }) {
       </TableCell>
     </TableRow>
   );
-}
+});
+
+EmptyTableRow.displayName = "EmptyTableRow";
 
 const DataTableRender = <TData, TValue>({
   table,

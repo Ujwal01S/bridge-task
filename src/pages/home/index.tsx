@@ -1,14 +1,24 @@
+import { useDeleteUser } from "@/api/hooks/use-delete-user";
 import { useGetUser } from "@/api/hooks/use-get-user";
+import DeleteDailog from "@/components/commons/delete-dailog/delete-dailog";
 import UserTable from "@/components/home/user-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
+import { useDeleteDialogStore } from "@/store/use-dailog-store";
 
 const HomePage = () => {
   const { skip, limit } = usePaginationParams();
   const { data, isPending } = useGetUser({ limit, skip });
 
-  console.log(data);
+  const { mutate, deleteIsPending } = useDeleteUser();
+
+  const { open, closeDeleteDialog, id } = useDeleteDialogStore();
+
+  const handleDeleteUser = async () => {
+    mutate(Number(id));
+  };
+
   return (
     <section className='grid gap-3'>
       <header>
@@ -16,7 +26,7 @@ const HomePage = () => {
       </header>
 
       <div>
-        <p className='flex items-center gap-2'>
+        <div className='flex items-center gap-2'>
           Total Users :{" "}
           <span className='font-semibold'>
             {isPending ? (
@@ -25,7 +35,7 @@ const HomePage = () => {
               data && data?.total
             )}
           </span>
-        </p>
+        </div>
       </div>
       {isPending ? (
         <div className='flex items-center justify-center w-full h-[50vh]  '>
@@ -34,6 +44,13 @@ const HomePage = () => {
       ) : (
         data && <UserTable userData={data} isPending={isPending} />
       )}
+
+      <DeleteDailog
+        open={open}
+        onChange={closeDeleteDialog}
+        onDelete={handleDeleteUser}
+        loading={deleteIsPending}
+      />
     </section>
   );
 };
