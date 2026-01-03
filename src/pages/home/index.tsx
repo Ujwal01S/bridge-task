@@ -6,10 +6,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
+import { useUserStore } from "@/store/use-user-store";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const { skip, limit } = usePaginationParams();
   const { data, isPending } = useGetUser({ limit, skip });
+
+  const { setUsers, users } = useUserStore();
+
+  useEffect(() => {
+    if (data) {
+      setUsers(data.users);
+    }
+  }, [data]);
 
   const { mutate, deleteIsPending } = useDeleteUser();
 
@@ -42,7 +52,13 @@ const HomePage = () => {
           <Spinner />
         </div>
       ) : (
-        data && <UserTable userData={data} isPending={isPending} />
+        data && (
+          <UserTable
+            userData={users}
+            isPending={isPending}
+            total={data.total}
+          />
+        )
       )}
 
       <DeleteDailog

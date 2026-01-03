@@ -1,5 +1,11 @@
 import { type HTMLInputTypeAttribute } from "react";
-import { Field, type FieldProps, useFormikContext } from "formik";
+import {
+  Field,
+  type FieldProps,
+  type FormikValues,
+  getIn,
+  useFormikContext,
+} from "formik";
 import { Input } from "@/components/ui/input";
 import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
@@ -17,7 +23,7 @@ const inputFieldVariants = cva("form-group", {
   },
 });
 
-interface Props {
+interface Props<TValues extends FormikValues> {
   name: string;
   className?: string;
   isRequired?: boolean;
@@ -28,7 +34,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const FormikInput = ({
+const FormikInput = <TValues extends FormikValues>({
   name,
   placeholder,
   className,
@@ -38,9 +44,11 @@ const FormikInput = ({
   variant,
   disabled,
   ...props
-}: Props) => {
-  const { errors, touched } = useFormikContext<any>();
-  const error = touched[name] && errors[name];
+}: Props<TValues>) => {
+  const { errors, touched } = useFormikContext<TValues>();
+
+  const isTouched = Boolean(getIn(touched, name));
+  const error = isTouched ? getIn(errors, name) : undefined;
 
   return (
     <Field name={name}>
@@ -54,6 +62,7 @@ const FormikInput = ({
               {label} {isRequired && <span className='text-red-500'>*</span>}
             </label>
           )}
+
           <Input
             id={name}
             placeholder={placeholder}
@@ -63,6 +72,7 @@ const FormikInput = ({
             {...props}
             className={cn(error && "border-red-500")}
           />
+
           {error && (
             <p className='text-sm font-medium text-destructive'>
               {String(error)}

@@ -5,7 +5,6 @@ interface IDeleteDialogState {
   open: boolean;
   setOpenDeleteDialog: (id: number) => void;
   closeDeleteDialog: () => void;
-  resetDeleteDialog: () => void;
 }
 
 export const useDeleteDialogStore = create<IDeleteDialogState>((set) => ({
@@ -13,5 +12,4 @@ export const useDeleteDialogStore = create<IDeleteDialogState>((set) => ({
   open: false,
   setOpenDeleteDialog: (id) => set({ id, open: true }),
   closeDeleteDialog: () => set({ id: undefined, open: false }),
-  resetDeleteDialog: () => set({ id: undefined, open: false }),
 }));

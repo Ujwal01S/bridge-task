@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 // creating this store to filter out deleted user when user data gets revalidate
 
@@ -8,11 +9,18 @@ interface IDeletedUsersState {
   clearDeletedUsers: () => void;
 }
 
-export const useDeletedUsersStore = create<IDeletedUsersState>((set, get) => ({
-  deletedUserIds: [],
-  addDeletedUser: (id) =>
-    set((state) => ({
-      deletedUserIds: [...state.deletedUserIds, id],
-    })),
-  clearDeletedUsers: () => set({ deletedUserIds: [] }),
-}));
+export const useDeletedUsersStore = create<IDeletedUsersState>()(
+  persist(
+    (set) => ({
+      deletedUserIds: [],
+      addDeletedUser: (id) =>
+        set((state) => ({
+          deletedUserIds: [...state.deletedUserIds, id],
+        })),
+      clearDeletedUsers: () => set({ deletedUserIds: [] }),
+    }),
+    {
+      name: "deleted-users-storage",
+    }
+  )
+);
