@@ -15,13 +15,7 @@ export const useGetUser = (options?: IGetUserOptions) => {
   const { deletedUserIds } = useDeletedUsersStore();
 
   const { data, isPending } = useQuery<IUsersApiResponse, string>({
-    queryKey: [
-      queryKey.GET_USERS,
-      options?.limit,
-      options?.skip,
-      options?.q,
-      options?.route,
-    ],
+    queryKey: [queryKey.GET_USERS, options?.limit, options?.skip, options?.q],
     queryFn: async () => {
       return getUserFn.getAllUsers(options);
     },

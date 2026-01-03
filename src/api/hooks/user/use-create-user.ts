@@ -8,9 +8,11 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
 import { getUserFn } from "@/api/functions/user/user";
+import { useSearchParams } from "@/hooks/query-params/use-search";
 
 export const useCreateUser = () => {
   const { limit, skip } = usePaginationParams();
+  const { q } = useSearchParams();
   // user zustand store to create user
   const { addUser } = useUserStore();
 
@@ -25,7 +27,7 @@ export const useCreateUser = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: [queryKey.GET_USERS, skip, limit],
+        queryKey: [queryKey.GET_USERS, skip, limit, q],
       });
       // Add user to Zustand store
       const newUser: IPickedUser = {
