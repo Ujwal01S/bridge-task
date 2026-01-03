@@ -1,5 +1,6 @@
+import { getUserFn } from "@/api/functions/user/user";
 import { notificationMessage } from "@/constants";
-import type { IUpdateUserPayload, IUser } from "@/interface";
+import type { IUpdateUserPayload } from "@/interface";
 import { useUserModalStore } from "@/store/use-user-modal-store";
 import { useUserStore } from "@/store/use-user-store";
 import {
@@ -7,7 +8,6 @@ import {
   successNotification,
 } from "@/utils/toast-notification";
 import { useMutation } from "@tanstack/react-query";
-import { getUserFn } from "../functions/user";
 
 export const useUpdateUser = () => {
   const { updateUser } = useUserStore();

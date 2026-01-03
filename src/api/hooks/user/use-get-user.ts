@@ -1,12 +1,12 @@
 import { type IUsersApiResponse } from "@/interface/user/user.interface";
 import { useQuery } from "@tanstack/react-query";
-import { getUserFn } from "../functions/user";
-import type { IGetUserOptions } from "../urls/user";
 import { queryKey } from "@/constants";
 import { useUserStore } from "@/store/use-user-store";
 import { useEffect, useMemo } from "react";
 import { filterDeletedUsers } from "@/utils/filter-user-api";
 import { useDeletedUsersStore } from "@/store/use-delete-user-store";
+import type { IGetUserOptions } from "@/api/urls/user/user";
+import { getUserFn } from "@/api/functions/user/user";
 
 export const useGetUser = (options?: IGetUserOptions) => {
   const { setUsers, setTotal, users } = useUserStore();

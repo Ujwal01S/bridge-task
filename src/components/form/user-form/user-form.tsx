@@ -1,11 +1,11 @@
-import { useUpdateUser } from "@/api/hooks/use-update-user";
 import FormikInput from "@/components/commons/formik/formik-input";
 import { Button } from "@/components/ui/button";
 import type { IPickedUser } from "@/interface";
 import { userFormSchema, type UserFormSchemaType } from "@/schema/user-schema";
 import { Form, Formik, type FormikHelpers } from "formik";
-import { Spinner } from "../ui/spinner";
-import { useCreateUser } from "@/api/hooks/use-create-user";
+import { Spinner } from "../../ui/spinner";
+import { useUpdateUser } from "@/api/hooks/user/use-update-user";
+import { useCreateUser } from "@/api/hooks/user/use-create-user";
 
 interface Props {
   mode: "create" | "update";

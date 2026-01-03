@@ -50,7 +50,7 @@ const UserTable = ({ userData, isPending, total }: IProps) => {
     <Card>
       <CardHeader className='sr-only'>header</CardHeader>
       <CardContent>
-        <div className='flex items-center gap-3 justify-end'>
+        <div className='flex items-center gap-3 justify-end py-2'>
           <Button onClick={() => setOpenModal(undefined, "create")}>
             Create User
           </Button>

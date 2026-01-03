@@ -1,5 +1,5 @@
+import { getUserUrls, type IGetUserOptions } from "@/api/urls/user/user";
 import type { IUpdateUserPayload, IUser, IUsersApiResponse } from "@/interface";
-import { getUserUrls, type IGetUserOptions } from "../urls/user";
 import api from "@/services/api-request";
 
 interface IGetUserFn {
