@@ -21,7 +21,7 @@ const HomePage = () => {
     limit,
     skip,
     q: debouncedSearchValue,
-    route: "search",
+    route: q ? "search" : "",
   });
 
   const { mutate, deleteIsPending } = useDeleteUser();

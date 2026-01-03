@@ -20,7 +20,11 @@ export const getUserUrls: IGetUserUrls = {
       return "users";
     }
     const { route, ...rest } = options;
-    const queryParams = buildQueryParams(rest);
+    const { skip, ...restWithoutSkip } = rest;
+    // remove skip for serach purpose
+    const decidingOption = route ? restWithoutSkip : rest;
+    const queryParams = buildQueryParams(decidingOption);
+
     const url = route ? `users/${route}${queryParams}` : `users${queryParams}`;
     return url;
   },
