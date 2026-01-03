@@ -45,7 +45,7 @@ const FormikInput = <TValues extends FormikValues>({
   disabled,
   ...props
 }: Props<TValues>) => {
-  const { errors, touched } = useFormikContext<TValues>();
+  const { errors, touched, setFieldValue } = useFormikContext<TValues>();
 
   const isTouched = Boolean(getIn(touched, name));
   const error = isTouched ? getIn(errors, name) : undefined;
@@ -69,6 +69,15 @@ const FormikInput = <TValues extends FormikValues>({
             type={type}
             disabled={disabled}
             {...field}
+            value={field.value ?? ""}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (type === "number") {
+                setFieldValue(name, value === "" ? null : Number(value));
+              } else {
+                field.onChange(e);
+              }
+            }}
             {...props}
             className={cn(error && "border-red-500")}
           />

@@ -3,11 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserFn } from "../functions/user";
 import type { IGetUserOptions } from "../urls/user";
 import { queryKey } from "@/constants";
-import { useMemo } from "react";
-import { useDeletedUsersStore } from "@/store/use-delete-user-store";
+import { useUserStore } from "@/store/use-user-store";
+import { useEffect, useMemo } from "react";
 import { filterDeletedUsers } from "@/utils/filter-user-api";
+import { useDeletedUsersStore } from "@/store/use-delete-user-store";
 
 export const useGetUser = (options?: IGetUserOptions) => {
+  const { setUsers, setTotal, users } = useUserStore();
+
+  // delete user store
   const { deletedUserIds } = useDeletedUsersStore();
 
   const { data, isPending } = useQuery<IUsersApiResponse, string>({
@@ -23,11 +27,26 @@ export const useGetUser = (options?: IGetUserOptions) => {
     },
   });
 
-  // removing the deleted user from the data
   const filteredData = useMemo(
     () => filterDeletedUsers(data, deletedUserIds),
     [data, deletedUserIds]
   );
 
-  return { data: filteredData, isPending };
+  // Sync API data with Zustand store on initial load
+  useEffect(() => {
+    if (filteredData?.users) {
+      const pickedUsers = filteredData.users.map((user) => ({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        age: user.age,
+        address: user.address,
+      }));
+      setUsers(pickedUsers);
+      setTotal(filteredData.total);
+    }
+  }, [data, setUsers, setTotal]);
+
+  return { data: { users, total: useUserStore.getState().total }, isPending };
 };

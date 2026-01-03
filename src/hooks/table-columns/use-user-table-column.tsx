@@ -1,12 +1,15 @@
 import { Button } from "@/components/ui/button";
 import type { IPickedUser } from "@/interface/user/user.interface";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
+import { useUserModalStore } from "@/store/use-user-modal-store";
 import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Edit2, Trash2 } from "lucide-react";
 import { useMemo } from "react";
 
 export const useUserColumn = () => {
   const { setOpenDeleteDialog } = useDeleteDialogStore();
+
+  const { setOpenModal } = useUserModalStore();
   const columns: ColumnDef<IPickedUser>[] = useMemo(
     () => [
       {
@@ -70,9 +73,23 @@ export const useUserColumn = () => {
             </Button>
           );
         },
-        cell: ({ row }) => (
-          <div className='capitalize'>{row.getValue("email")}</div>
-        ),
+        cell: ({ row }) => <div>{row.getValue("email")}</div>,
+      },
+      {
+        accessorKey: "age",
+        header: "Age",
+        cell: ({ row }) => <div>{row.getValue("age") ?? "N/A"}</div>,
+      },
+
+      {
+        accessorKey: "address",
+        header: "Address(country)",
+        cell: ({ row }) => {
+          const address = row.getValue("address") as
+            | { country?: string }
+            | undefined;
+          return <div>{address?.country || "N/A"}</div>;
+        },
       },
       {
         id: "actions",
@@ -85,7 +102,7 @@ export const useUserColumn = () => {
                 <Trash2 className='text-red-400' />
               </button>
 
-              <button>
+              <button onClick={() => setOpenModal(id, "edit")}>
                 <Edit2 className='text-blue-500' />
               </button>
             </div>
