@@ -1,35 +1,37 @@
-import { Form, Formik } from "formik";
 import FormikInput from "@/components/commons/formik/formik-input";
 import { Button } from "@/components/ui/button";
-import {
-  userFormSchema,
-  type UserFormPayloadType,
-  type UserFormSchemaType,
-} from "@/schema/user-schema";
+import type { IPickedUser } from "@/interface";
+import { userFormSchema, type UserFormSchemaType } from "@/schema/user-schema";
+import { Form, Formik, type FormikHelpers } from "formik";
+import { Spinner } from "../../ui/spinner";
+import { useUpdateUser } from "@/api/hooks/user/use-update-user";
+import { useCreateUser } from "@/api/hooks/user/use-create-user";
 
 interface Props {
   mode: "create" | "update";
-  initialValues?: Partial<UserFormPayloadType>;
-  onSubmit: (values: UserFormPayloadType) => void | Promise<void>;
+  initialValues?: IPickedUser;
   submitLabel?: string;
-  isLoading?: boolean;
+  id?: number;
 }
 
-const UserForm = ({
-  mode,
-  initialValues,
-  onSubmit,
-  submitLabel,
-  isLoading = false,
-}: Props) => {
+const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
   const defaultValues: UserFormSchemaType = {
-    form_type: mode,
     firstName: initialValues?.firstName || "",
     lastName: initialValues?.lastName || "",
     email: initialValues?.email || "",
-    age: initialValues?.age ?? null,
-    address: initialValues?.address ?? "",
+    age: initialValues?.age ?? undefined,
+    address: initialValues?.address
+      ? typeof initialValues?.address === "string"
+        ? initialValues?.address
+        : initialValues?.address.country || ""
+      : "",
   };
+  // edit user custom hook
+  const { editUser, userEditIsPending } = useUpdateUser();
+
+  // create user custom hook
+
+  const { createUser, createUserIsPending } = useCreateUser();
 
   const validate = (values: UserFormSchemaType) => {
     const result = userFormSchema.safeParse(values);
@@ -44,15 +46,29 @@ const UserForm = ({
     return errors;
   };
 
-  const handleSubmit = async (values: UserFormSchemaType) => {
-    const result = userFormSchema.safeParse(values);
+  const handleSubmit = async (
+    values: UserFormSchemaType,
+    { resetForm }: FormikHelpers<UserFormSchemaType>
+  ) => {
+    const { address, age, ...payload } = values;
 
-    if (!result.success) {
-      return;
+    const formattedPayload = {
+      ...payload,
+      ...(age !== null && age !== undefined && { age }),
+      ...(address && { address: { country: address } }),
+    };
+
+    if (mode === "update" && id !== undefined) {
+      editUser({ id, payload: formattedPayload });
     }
 
-    const { form_type, ...payload } = result.data;
-    await onSubmit(payload);
+    if (mode === "create") {
+      createUser(formattedPayload, {
+        onSuccess: () => {
+          resetForm();
+        },
+      });
+    }
   };
 
   return (
@@ -105,11 +121,17 @@ const UserForm = ({
             />
           </div>
 
-          <Button type='submit' disabled={isSubmitting || isLoading}>
-            {isSubmitting || isLoading
-              ? "Submitting..."
-              : submitLabel ||
-                (mode === "create" ? "Create User" : "Update User")}
+          <Button
+            type='submit'
+            disabled={isSubmitting || userEditIsPending || createUserIsPending}
+          >
+            {isSubmitting || userEditIsPending || createUserIsPending ? (
+              <div className='flex gap-2 items-center'>
+                <Spinner /> {mode === "create" ? "Creating..." : "Updating"}
+              </div>
+            ) : (
+              submitLabel || (mode === "create" ? "Create" : "Update")
+            )}
           </Button>
         </Form>
       )}

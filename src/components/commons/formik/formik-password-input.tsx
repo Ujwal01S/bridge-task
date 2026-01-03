@@ -1,4 +1,4 @@
-import { type HTMLInputTypeAttribute } from "react";
+import { useState } from "react";
 import {
   Field,
   type FieldProps,
@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import { Eye, EyeOff } from "lucide-react";
 
 const inputFieldVariants = cva("form-group", {
   variants: {
@@ -29,23 +30,22 @@ interface Props<TValues extends FormikValues> {
   isRequired?: boolean;
   placeholder: string;
   label?: string;
-  type?: HTMLInputTypeAttribute;
   variant?: "default" | "formGroup" | "single";
   disabled?: boolean;
 }
 
-const FormikInput = <TValues extends FormikValues>({
+const FormikPasswordInput = <TValues extends FormikValues>({
   name,
   placeholder,
   className,
   isRequired = true,
   label,
-  type = "text",
   variant,
   disabled,
   ...props
 }: Props<TValues>) => {
-  const { errors, touched, setFieldValue } = useFormikContext<TValues>();
+  const { errors, touched } = useFormikContext<TValues>();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const isTouched = Boolean(getIn(touched, name));
   const error = isTouched ? getIn(errors, name) : undefined;
@@ -63,24 +63,30 @@ const FormikInput = <TValues extends FormikValues>({
             </label>
           )}
 
-          <Input
-            id={name}
-            placeholder={placeholder}
-            type={type}
-            disabled={disabled}
-            {...field}
-            value={field.value ?? ""}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (type === "number") {
-                setFieldValue(name, value === "" ? null : Number(value));
-              } else {
-                field.onChange(e);
-              }
-            }}
-            {...props}
-            className={cn(error && "border-red-500")}
-          />
+          <div className='relative'>
+            {showPassword ? (
+              <Eye
+                size={14}
+                onClick={() => setShowPassword((prev) => !prev)}
+                className='absolute right-3 top-[35%] cursor-pointer'
+              />
+            ) : (
+              <EyeOff
+                size={14}
+                onClick={() => setShowPassword((prev) => !prev)}
+                className='absolute right-3 top-[35%] cursor-pointer'
+              />
+            )}
+            <Input
+              id={name}
+              placeholder={placeholder}
+              type={showPassword ? "text" : "password"}
+              disabled={disabled}
+              {...field}
+              {...props}
+              className={cn(error && "border-red-500")}
+            />
+          </div>
 
           {error && (
             <p className='text-sm font-medium text-destructive'>
@@ -93,4 +99,4 @@ const FormikInput = <TValues extends FormikValues>({
   );
 };
 
-export default FormikInput;
+export default FormikPasswordInput;

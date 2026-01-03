@@ -5,4 +5,8 @@ export const notificationMessage: INotificationMessage = {
   DELETE_FAILED: "User Delete Failed",
   UPDATE_FAILED: "User Update Failed",
   UPDATE_SUCCESS: "User Update Success",
+  CREATE_SUCCESS: "User Successfully created",
+  CREATE_FAILED: "User creation Failed",
+  LOGIN_FAIL: "Login Failed",
+  LOGIN_SUCCESS: "Login Successs",
 };

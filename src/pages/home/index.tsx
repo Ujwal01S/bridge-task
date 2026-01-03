@@ -1,29 +1,34 @@
-import { useDeleteUser } from "@/api/hooks/use-delete-user";
-import { useGetUser } from "@/api/hooks/use-get-user";
+import { useDeleteUser } from "@/api/hooks/user/use-delete-user";
+import { useGetUser } from "@/api/hooks/user/use-get-user";
 import DeleteDailog from "@/components/commons/delete-dailog/delete-dailog";
+import UserModal from "@/components/commons/user-modal";
 import UserTable from "@/components/home/user-table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Spinner } from "@/components/ui/spinner";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
+import { useSearchParams } from "@/hooks/query-params/use-search";
+import { useDebounce } from "@/hooks/use-debounce";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
-import { useUserStore } from "@/store/use-user-store";
-import { useEffect } from "react";
+import { useUserModalStore } from "@/store/use-user-modal-store";
 
 const HomePage = () => {
+  // pagination params
   const { skip, limit } = usePaginationParams();
-  const { data, isPending } = useGetUser({ limit, skip });
 
-  const { setUsers, users } = useUserStore();
-
-  useEffect(() => {
-    if (data) {
-      setUsers(data.users);
-    }
-  }, [data]);
+  // search params
+  const { q } = useSearchParams();
+  const debouncedSearchValue = useDebounce(q, 300);
+  const { data, isPending } = useGetUser({
+    limit,
+    skip,
+    q: debouncedSearchValue,
+    route: "search",
+  });
 
   const { mutate, deleteIsPending } = useDeleteUser();
 
   const { open, closeDeleteDialog, id } = useDeleteDialogStore();
+
+  const { openModal, type, closeModal, userId } = useUserModalStore();
 
   const handleDeleteUser = async () => {
     mutate(Number(id));
@@ -47,18 +52,13 @@ const HomePage = () => {
           </span>
         </div>
       </div>
-      {isPending ? (
-        <div className='flex items-center justify-center w-full h-[50vh]  '>
-          <Spinner />
-        </div>
-      ) : (
-        data && (
-          <UserTable
-            userData={users}
-            isPending={isPending}
-            total={data.total}
-          />
-        )
+
+      {data && (
+        <UserTable
+          userData={data.users}
+          isPending={isPending}
+          total={data.total}
+        />
       )}
 
       <DeleteDailog
@@ -66,6 +66,13 @@ const HomePage = () => {
         onChange={closeDeleteDialog}
         onDelete={handleDeleteUser}
         loading={deleteIsPending}
+      />
+
+      <UserModal
+        onChange={closeModal}
+        open={openModal}
+        type={type as "create" | "edit"}
+        id={userId}
       />
     </section>
   );

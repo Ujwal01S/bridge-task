@@ -1,29 +1,27 @@
-import { notificationMessage, queryKey } from "@/constants";
-import { usePaginationParams } from "@/hooks/query-params/use-pagination";
+import { notificationMessage } from "@/constants";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
+import { useUserStore } from "@/store/use-user-store";
 import {
   errorNotification,
   successNotification,
 } from "@/utils/toast-notification";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getUserFn } from "../functions/user";
+import { useMutation } from "@tanstack/react-query";
 import { useDeletedUsersStore } from "@/store/use-delete-user-store";
+import { getUserFn } from "@/api/functions/user/user";
 
 export const useDeleteUser = () => {
-  const queryClient = useQueryClient();
-  const { skip, limit } = usePaginationParams();
   const { closeDeleteDialog } = useDeleteDialogStore();
+  const { removeUser } = useUserStore();
   const { addDeletedUser } = useDeletedUsersStore();
 
   const { mutate, isPending: deleteIsPending } = useMutation({
     mutationFn: (id: number) => getUserFn.deleteUser(id),
     onSuccess: (_, deletedUserId) => {
-      queryClient.invalidateQueries({
-        queryKey: [queryKey.GET_USERS, skip, limit],
-      });
-
+      // delete user one to remove user list and persists
       addDeletedUser(deletedUserId);
 
+      // for zustand store one
+      removeUser(deletedUserId);
       successNotification({
         header: "Delete User",
         description: notificationMessage.DELETE_SUCCESS,
