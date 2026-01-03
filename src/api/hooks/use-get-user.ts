@@ -5,6 +5,7 @@ import type { IGetUserOptions } from "../urls/user";
 import { queryKey } from "@/constants";
 import { useMemo } from "react";
 import { useDeletedUsersStore } from "@/store/use-delete-user-store";
+import { filterDeletedUsers } from "@/utils/filter-user-api";
 
 export const useGetUser = (options?: IGetUserOptions) => {
   const { deletedUserIds } = useDeletedUsersStore();
@@ -22,19 +23,11 @@ export const useGetUser = (options?: IGetUserOptions) => {
     },
   });
 
-  const filteredData = useMemo(() => {
-    if (!data) return undefined;
-
-    const filteredUsers = data.users.filter(
-      (user) => !deletedUserIds.includes(user.id)
-    );
-
-    return {
-      ...data,
-      users: filteredUsers,
-      total: data.total - deletedUserIds.length,
-    };
-  }, [data, deletedUserIds]);
+  // removing the deleted user from the data
+  const filteredData = useMemo(
+    () => filterDeletedUsers(data, deletedUserIds),
+    [data, deletedUserIds]
+  );
 
   return { data: filteredData, isPending };
 };
