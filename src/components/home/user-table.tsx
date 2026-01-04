@@ -11,13 +11,14 @@ import {
 } from "@tanstack/react-table";
 import { useState } from "react";
 import PaginationButton from "../commons/custom-button/pagination-button";
-import SearchInput from "../commons/search-user";
+import SearchInput from "../commons/search-input";
 import DataTableRender from "../data-table/render-row";
 import ViewOptions from "../data-table/view-options";
 import UserForm from "../form/user-form/user-form";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Spinner } from "../ui/spinner";
+import QuestionToolTip from "../commons/tool-tip";
 
 interface IProps {
   userData: IPickedUser[];
@@ -97,7 +98,8 @@ const UserTable = ({ userData, isPending, total }: IProps) => {
 
       <CardFooter className='flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center w-full'>
         <div className='flex items-center gap-2 text-sm'>
-          Clear Persisted Deleted UserId{" "}
+          <QuestionToolTip tooltipInfo="Deleted ID's have been persisted which are filtered out from get user API use clear to empty the catch" />
+          Clear Persisted Deleted UserId :{" "}
           <Button variant={"outline"} onClick={() => clearDeletedUsers()}>
             Clear
           </Button>

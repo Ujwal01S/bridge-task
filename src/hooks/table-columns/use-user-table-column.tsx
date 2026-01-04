@@ -127,7 +127,7 @@ export const useUserColumn = () => {
         },
       },
     ],
-    []
+    [setOpenDeleteDialog, setOpenModal]
   );
 
   return columns;

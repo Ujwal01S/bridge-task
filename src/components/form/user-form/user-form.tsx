@@ -22,10 +22,10 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
     email: initialValues?.email || "",
     age: initialValues?.age ?? undefined,
   };
-  // edit user custom hook
+  // edit user mutation custom hook
   const { editUser, userEditIsPending } = useUpdateUser();
 
-  // create user custom hook
+  // create user mutation custom hook
   const { createUser, createUserIsPending } = useCreateUser();
 
   // for close modal
