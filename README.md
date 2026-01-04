@@ -36,8 +36,8 @@ src/
 │ │ ├── auth/ # Auth mutation hooks
 │ │ └── user/ # User query/mutation (CRUD) hooks
 │ └── urls/ # API endpoint definitions
-│ ├── auth/
-│ └── user/
+│   ├── auth/
+│   └── user/
 ├── components/ # React components
 │ ├── commons/ # Reusable components
 │ │ ├── custom-button/ # Button variants (From Submit with disable and loading, Pagination)
