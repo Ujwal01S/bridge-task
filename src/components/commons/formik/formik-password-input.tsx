@@ -24,7 +24,7 @@ const inputFieldVariants = cva("form-group", {
   },
 });
 
-interface Props<TValues extends FormikValues> {
+interface Props<_TValues extends FormikValues> {
   name: string;
   className?: string;
   isRequired?: boolean;

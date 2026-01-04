@@ -10,7 +10,6 @@ import NotFound from "@/components/not-found";
 // lazy import components
 
 const HomePage = lazy(() => import("@/pages/home/index"));
-const CreateUserPage = lazy(() => import("@/pages/create-user/index"));
 const LoginPage = lazy(() => import("@/pages/login/index"));
 
 const ProjectRoutes = () => {
@@ -31,14 +30,6 @@ const ProjectRoutes = () => {
             element={
               <Suspense fallback={<Spinner />}>
                 <HomePage />
-              </Suspense>
-            }
-          />
-          <Route
-            path={ROUTE.USER_CREATE}
-            element={
-              <Suspense fallback={<Spinner />}>
-                <CreateUserPage />
               </Suspense>
             }
           />
