@@ -173,7 +173,7 @@ src/
 
 # use-modal-store
 
-- This store is used to openModal , close , title, type, userId set dynamic content for modal which is type ReactNode allowing the modal to be used for multi-purpose
+- This store is used to openModal , close , title, type, userId, content set dynamic content for modal which is type ReactNode allowing the modal to be used for multi-purpose
 - The type of modal is set to create or upadate or undefined for multi use case.
 - This modal closes when the user is updated onSuccess of update but not for create user to allow multiple addition of user.
 - This modal store is used to make custom modal reuseable for any case.
