@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useUserModalStore } from "@/store/use-user-modal-store";
+import { useModalStore } from "@/store/use-modal-store";
 import { memo } from "react";
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const CustomModal = ({ open, onChange }: Props) => {
-  const { content, title } = useUserModalStore();
+  const { content, title } = useModalStore();
   return (
     <Dialog open={open} onOpenChange={onChange}>
       <DialogContent className='min-w-[50vw] min-h-[70vh] overflow-y-auto [&]:duration-0 [&]:data-[state=closed]:duration-0'>

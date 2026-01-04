@@ -2,7 +2,7 @@ import UserForm from "@/components/form/user-form/user-form";
 import { Button } from "@/components/ui/button";
 import type { IPickedUser } from "@/interface/user/user.interface";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
-import { useUserModalStore } from "@/store/use-user-modal-store";
+import { useModalStore } from "@/store/use-modal-store";
 import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Edit2, Trash2 } from "lucide-react";
 import { useMemo } from "react";
@@ -10,7 +10,7 @@ import { useMemo } from "react";
 export const useUserColumn = () => {
   const { setOpenDeleteDialog } = useDeleteDialogStore();
 
-  const { setOpenModal } = useUserModalStore();
+  const { setOpenModal } = useModalStore();
   const columns: ColumnDef<IPickedUser>[] = useMemo(
     () => [
       {
