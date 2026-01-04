@@ -6,7 +6,19 @@ interface IUserModalState {
   userId: number | undefined;
   openModal: boolean;
   type: ModalType | undefined;
-  setOpenModal: (id: number | undefined, type: ModalType) => void;
+  content: React.ReactNode;
+  title: string;
+  setOpenModal: ({
+    id,
+    type,
+    content,
+    title,
+  }: {
+    id: number | undefined;
+    type: ModalType;
+    content: React.ReactNode;
+    title: string;
+  }) => void;
   setOpenCreateModal: () => void;
   closeModal: () => void;
 }
@@ -15,9 +27,17 @@ export const useUserModalStore = create<IUserModalState>((set) => ({
   userId: undefined,
   openModal: false,
   type: undefined,
-  setOpenModal: (id, type) => set({ userId: id, openModal: true, type }),
+  content: undefined,
+  title: "",
+  setOpenModal: ({ id, type, content, title }) =>
+    set({ userId: id, openModal: true, type, content, title }),
   setOpenCreateModal: () =>
     set({ userId: undefined, openModal: true, type: "create" }),
   closeModal: () =>
-    set({ userId: undefined, openModal: false, type: undefined }),
+    set({
+      userId: undefined,
+      openModal: false,
+      type: undefined,
+      content: undefined,
+    }),
 }));

@@ -1,7 +1,7 @@
 import { useDeleteUser } from "@/api/hooks/user/use-delete-user";
 import { useGetUser } from "@/api/hooks/user/use-get-user";
+import CustomModal from "@/components/commons/custom-modal";
 import DeleteDailog from "@/components/commons/delete-dailog/delete-dailog";
-import UserModal from "@/components/commons/user-modal";
 import UserTable from "@/components/home/user-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
@@ -28,7 +28,7 @@ const HomePage = () => {
 
   const { open, closeDeleteDialog, id } = useDeleteDialogStore();
 
-  const { openModal, type, closeModal, userId } = useUserModalStore();
+  const { openModal, closeModal } = useUserModalStore();
 
   const handleDeleteUser = async () => {
     mutate(Number(id));
@@ -68,12 +68,7 @@ const HomePage = () => {
         loading={deleteIsPending}
       />
 
-      <UserModal
-        onChange={closeModal}
-        open={openModal}
-        type={type as "create" | "edit"}
-        id={userId}
-      />
+      <CustomModal open={openModal} onChange={closeModal} />
     </section>
   );
 };
