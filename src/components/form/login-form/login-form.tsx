@@ -34,7 +34,11 @@ const LoginForm = () => {
     values: LoginFormType,
     { resetForm }: FormikHelpers<LoginFormType>
   ) => {
-    login(values);
+    login(values, {
+      onSuccess: () => {
+        resetForm();
+      },
+    });
   };
 
   return (

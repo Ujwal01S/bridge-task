@@ -18,9 +18,9 @@ const Header = () => {
   return (
     <header className='w-full  px-4  shadow-md bg-white fixed z-20 md:z-99'>
       <div className=' h-16 flex items-center justify-between  '>
-        <Link to={ROUTE.USER_VIEW_ALL}>
+        <div>
           <h2>Task</h2>
-        </Link>
+        </div>
         {isAuthenticated ? (
           <div>
             <p className='text-xs'>

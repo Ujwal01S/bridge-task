@@ -9,6 +9,7 @@ import { useUserSearchParams } from "@/hooks/query-params/use-search";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
 import { useModalStore } from "@/store/use-modal-store";
+import { useCallback } from "react";
 
 const HomePage = () => {
   // pagination params
@@ -30,9 +31,9 @@ const HomePage = () => {
 
   const { openModal, closeModal } = useModalStore();
 
-  const handleDeleteUser = async () => {
+  const handleDeleteUser = useCallback(() => {
     mutate(Number(id));
-  };
+  }, [mutate, id]);
 
   return (
     <section className='grid gap-3 w-full'>
