@@ -26,6 +26,7 @@ cd bridge
 
 ## Folder Structure Explanation
 
+```
 src/
 ├── api/ # API layer functions and url are bundled in object for specific contents such as user (CRUD)
 │ ├── functions/ # API function implementations
@@ -37,7 +38,6 @@ src/
 │ └── urls/ # API endpoint definitions
 │ ├── auth/
 │ └── user/
-│
 ├── components/ # React components
 │ ├── commons/ # Reusable components
 │ │ ├── custom-button/ # Button variants (From Submit with disable and loading, Pagination)
@@ -46,31 +46,23 @@ src/
 │ │ ├── formik/ # Formik input components contains Input and Password Input
 │ │ ├── search-input/ # Search input with debounce
 │ │ └── tool-tip/ # Tooltip component
-| |
 │ ├── data-table/ # Table components
 │ │ ├── render-row.tsx # Table rendering logic
 │ │ └── view-options.tsx # Column visibility controls
-| |
 │ ├── form/ # Form components
 │ │ ├── login-form/ # Login form
 │ │ └── user-form/ # User create/edit form handle in single file
-| |
 │ ├── home/ # Home page specific components
 │ │ └── user-table.tsx # Main user table component
-| |
 │ ├── layout/ # Layout components
 │ │ ├── app-sidebar.tsx # Application sidebar
 │ │ ├── header.tsx # Header component
 │ │ └── layout.tsx # Root layout wrapper
-| |
 │ ├── not-found/ # 404 page component
-| |
 │ └── ui/ # shadcn/ui components
 │ └── ... # Button, Dialog, Input, Table, etc.
-│
 ├── config/ # Application configuration
 │ └── config.ts # Environment variable validation
-│
 ├── constants/ # Application constants all imported from single index.ts
 │ ├── formError-message.constant.ts
 │ ├── general-constant.ts
@@ -78,7 +70,6 @@ src/
 │ ├── query-key.constant.ts
 │ ├── route.constant.ts
 │ └── sidebar-navigation.constant.ts
-│
 ├── hooks/ # Custom React hooks
 │ ├── use-debounce.ts # Debounce hook
 │ ├── use-mobile.ts # Mobile detection hook
@@ -87,7 +78,6 @@ src/
 │ │ └── use-search.ts # Search state in URL
 │ └── table-columns/ # Table column definitions
 │ └── use-user-table-column.tsx
-│
 ├── interface/ # TypeScript interfaces/types all imported from single index.ts
 │ ├── error-status-http.enum.ts
 │ ├── form-error-message.interface.ts
@@ -97,44 +87,37 @@ src/
 │ ├── navigation.interface.ts
 │ ├── response/ # API response types
 │ └── user/ # User related types
-│
 ├── lib/ # Utility libraries
 │ └── utils.ts # Helper functions (cn, etc.)
-│
 ├── pages/ # Page components
 │ ├── home/ # Home/Dashboard page
 │ └── login/ # Login page
-│
 ├── providers/ # Context providers or any global providers
 │ └── react-query-provider.tsx # TanStack Query setup
-│
 ├── routes/ # Routing configuration
 │ ├── auth-gaurd.tsx # Protected route wrapper
 │ └── index.tsx # Route definitions
-│
 ├── schema/ # Zod validation schemas
 │ ├── login-schema.ts
 │ └── user-schema.ts
-│
 ├── services/ # Core services
 │ └── api-request.ts # Axios instance with interceptors
-│
 ├── store/ # Zustand state stores
 │ ├── use-auth-store.ts # Authentication state
 │ ├── use-dailog-store.ts # Delete dialog state
 │ ├── use-delete-user-store.ts # Deleted users tracking
 │ ├── use-modal-store.ts # Modal state (content, visibility)
 │ └── use-user-store.ts # User list optimistic updates
-│
 ├── utils/ # Utility functions
 │ ├── error-message.ts # Error message formatting
 │ ├── filter-user-api.ts # User filtering logic
 │ ├── query-params-builder.ts # URL query builder
 │ └── toast-notification.ts # Toast notification helpers
-│
 ├── App.tsx # Root component
 ├── main.tsx # Application entry point
 └── index.css # Global styles
+
+```
 
 ### State Management Decisions
 
