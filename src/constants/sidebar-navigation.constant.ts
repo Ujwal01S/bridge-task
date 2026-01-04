@@ -8,7 +8,7 @@ export const navigationData: INaviationProps[] = [
     icon: Users,
     subNavigation: [
       { title: "View Users", url: "/" },
-      { title: "Create User", url: "/create-user" },
+      // { title: "Create User", url: "/create-user" },
     ],
   },
 ];

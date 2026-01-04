@@ -126,6 +126,7 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
           <div className='w-full flex gap-3 items-center '>
             <Button
               variant={"outline"}
+              type='button'
               onClick={() => closeModal()}
               className='flex-1'
               disabled={

@@ -14,7 +14,7 @@ const SearchInput = ({ onChange, placeholder, className, value }: IProps) => {
       <Input
         placeholder={placeholder}
         onChange={onChange}
-        className={cn("w-64", className)}
+        className={cn("sm:w-64", className)}
         value={value}
       />
     </>

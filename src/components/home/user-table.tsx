@@ -57,17 +57,19 @@ const UserTable = ({ userData, isPending, total }: IProps) => {
     },
   });
   return (
-    <Card>
+    <Card className='w-full overflow-hidden'>
       <CardHeader className='sr-only'>header</CardHeader>
-      <CardContent>
-        <div className='flex justify-between items-center'>
+      <CardContent className='w-full'>
+        <div className='flex flex-col justify-center sm:flex-row gap-3 sm:justify-between sm:items-center mb-4'>
           <SearchInput
             placeholder='search user...'
             onChange={handleSearchChange}
             value={q}
+            className='w-full'
           />
-          <div className='flex items-center gap-3 justify-end py-2'>
+          <div className='flex items-center gap-3 w-full sm:w-auto'>
             <Button
+              className='flex-1 sm:flex-none'
               onClick={() =>
                 setOpenModal({
                   id: undefined,
@@ -93,8 +95,8 @@ const UserTable = ({ userData, isPending, total }: IProps) => {
         )}
       </CardContent>
 
-      <CardFooter className='flex justify-between items-center w-full'>
-        <div>
+      <CardFooter className='flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center w-full'>
+        <div className='flex items-center gap-2 text-sm'>
           Clear Persisted Deleted UserId{" "}
           <Button variant={"outline"} onClick={() => clearDeletedUsers()}>
             Clear

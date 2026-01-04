@@ -35,7 +35,7 @@ const HomePage = () => {
   };
 
   return (
-    <section className='grid gap-3'>
+    <section className='grid gap-3 w-full'>
       <header>
         <h5>View All Users</h5>
       </header>
