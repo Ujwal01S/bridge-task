@@ -1,8 +1,8 @@
-import { useSearchParams } from "@/hooks/query-params/use-search";
+import { useUserSearchParams } from "@/hooks/query-params/use-search";
 import { useUserColumn } from "@/hooks/table-columns/use-user-table-column";
 import type { IPickedUser } from "@/interface";
 import { useDeletedUsersStore } from "@/store/use-delete-user-store";
-import { useUserModalStore } from "@/store/use-user-modal-store";
+import { useModalStore } from "@/store/use-modal-store";
 import {
   getCoreRowModel,
   getSortedRowModel,
@@ -14,10 +14,10 @@ import PaginationButton from "../commons/custom-button/pagination-button";
 import SearchInput from "../commons/search-user";
 import DataTableRender from "../data-table/render-row";
 import ViewOptions from "../data-table/view-options";
+import UserForm from "../form/user-form/user-form";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Spinner } from "../ui/spinner";
-import UserForm from "../form/user-form/user-form";
 
 interface IProps {
   userData: IPickedUser[];
@@ -28,11 +28,11 @@ interface IProps {
 const UserTable = ({ userData, isPending, total }: IProps) => {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
-  const { q, setQ } = useSearchParams();
+  const { q, setQ } = useUserSearchParams();
 
   const { clearDeletedUsers } = useDeletedUsersStore();
 
-  const { setOpenModal } = useUserModalStore();
+  const { setOpenModal } = useModalStore();
 
   const columns = useUserColumn();
 

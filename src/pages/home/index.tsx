@@ -5,17 +5,17 @@ import DeleteDailog from "@/components/commons/delete-dailog/delete-dailog";
 import UserTable from "@/components/home/user-table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePaginationParams } from "@/hooks/query-params/use-pagination";
-import { useSearchParams } from "@/hooks/query-params/use-search";
+import { useUserSearchParams } from "@/hooks/query-params/use-search";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
-import { useUserModalStore } from "@/store/use-user-modal-store";
+import { useModalStore } from "@/store/use-modal-store";
 
 const HomePage = () => {
   // pagination params
   const { skip, limit } = usePaginationParams();
 
   // search params
-  const { q } = useSearchParams();
+  const { q } = useUserSearchParams();
   const debouncedSearchValue = useDebounce(q, 300);
   const { data, isPending } = useGetUser({
     limit,
@@ -28,7 +28,7 @@ const HomePage = () => {
 
   const { open, closeDeleteDialog, id } = useDeleteDialogStore();
 
-  const { openModal, closeModal } = useUserModalStore();
+  const { openModal, closeModal } = useModalStore();
 
   const handleDeleteUser = async () => {
     mutate(Number(id));

@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 type ModalType = "create" | "edit";
 
-interface IUserModalState {
+interface IModalState {
   userId: number | undefined;
   openModal: boolean;
   type: ModalType | undefined;
@@ -23,7 +23,7 @@ interface IUserModalState {
   closeModal: () => void;
 }
 
-export const useUserModalStore = create<IUserModalState>((set) => ({
+export const useModalStore = create<IModalState>((set) => ({
   userId: undefined,
   openModal: false,
   type: undefined,

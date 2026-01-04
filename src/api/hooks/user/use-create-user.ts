@@ -1,18 +1,18 @@
-import type { IPickedUser, IUpdateUserPayload } from "@/interface";
+import { getUserFn } from "@/api/functions/user/user";
 import { notificationMessage, queryKey } from "@/constants";
+import { usePaginationParams } from "@/hooks/query-params/use-pagination";
+import { useUserSearchParams } from "@/hooks/query-params/use-search";
+import type { IPickedUser, IUpdateUserPayload } from "@/interface";
 import { useUserStore } from "@/store/use-user-store";
 import {
   errorNotification,
   successNotification,
 } from "@/utils/toast-notification";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { usePaginationParams } from "@/hooks/query-params/use-pagination";
-import { getUserFn } from "@/api/functions/user/user";
-import { useSearchParams } from "@/hooks/query-params/use-search";
 
 export const useCreateUser = () => {
   const { limit, skip } = usePaginationParams();
-  const { q } = useSearchParams();
+  const { q } = useUserSearchParams();
   // user zustand store to create user
   const { addUser } = useUserStore();
 

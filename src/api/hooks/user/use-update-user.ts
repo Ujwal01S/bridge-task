@@ -1,7 +1,7 @@
 import { getUserFn } from "@/api/functions/user/user";
 import { notificationMessage } from "@/constants";
 import type { IUpdateUserPayload } from "@/interface";
-import { useUserModalStore } from "@/store/use-user-modal-store";
+import { useModalStore } from "@/store/use-modal-store";
 import { useUserStore } from "@/store/use-user-store";
 import {
   errorNotification,
@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 
 export const useUpdateUser = () => {
   const { updateUser } = useUserStore();
-  const { closeModal } = useUserModalStore();
+  const { closeModal } = useModalStore();
 
   const { mutate: editUser, isPending: userEditIsPending } = useMutation({
     mutationFn: async (vars: { id: number; payload: IUpdateUserPayload }) => {

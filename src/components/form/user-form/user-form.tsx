@@ -5,7 +5,7 @@ import FormikInput from "@/components/commons/formik/formik-input";
 import { Button } from "@/components/ui/button";
 import type { IPickedUser } from "@/interface";
 import { userFormSchema, type UserFormSchemaType } from "@/schema/user-schema";
-import { useUserModalStore } from "@/store/use-user-modal-store";
+import { useModalStore } from "@/store/use-modal-store";
 import { Form, Formik, type FormikHelpers } from "formik";
 
 interface Props {
@@ -21,11 +21,6 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
     lastName: initialValues?.lastName || "",
     email: initialValues?.email || "",
     age: initialValues?.age ?? undefined,
-    address: initialValues?.address
-      ? typeof initialValues?.address === "string"
-        ? initialValues?.address
-        : initialValues?.address.country || ""
-      : "",
   };
   // edit user custom hook
   const { editUser, userEditIsPending } = useUpdateUser();
@@ -33,7 +28,8 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
   // create user custom hook
   const { createUser, createUserIsPending } = useCreateUser();
 
-  const { closeModal } = useUserModalStore();
+  // for close modal
+  const { closeModal } = useModalStore();
 
   const validate = (values: UserFormSchemaType) => {
     const result = userFormSchema.safeParse(values);
@@ -52,12 +48,11 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
     values: UserFormSchemaType,
     { resetForm }: FormikHelpers<UserFormSchemaType>
   ) => {
-    const { address, age, ...payload } = values;
+    const { age, ...payload } = values;
 
     const formattedPayload = {
       ...payload,
       ...(age !== null && age !== undefined && { age }),
-      ...(address && { address: { country: address } }),
     };
 
     if (mode === "update" && id !== undefined) {
@@ -110,14 +105,6 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
               label='Age'
               placeholder='Enter age'
               type='number'
-              isRequired={false}
-              variant='formGroup'
-            />
-
-            <FormikInput<UserFormSchemaType>
-              name='address'
-              label='Address'
-              placeholder='Enter address'
               isRequired={false}
               variant='formGroup'
             />

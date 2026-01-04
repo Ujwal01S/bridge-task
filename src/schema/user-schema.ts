@@ -17,7 +17,6 @@ export const userFormSchema = z.object({
     .min(18, formErrorMessage.AGE)
     .optional()
     .nullable(),
-  address: z.string().optional().nullable(),
 });
 
 export type UserFormSchemaType = z.infer<typeof userFormSchema>;
