@@ -98,7 +98,7 @@ const UserTable = ({ userData, isPending, total }: IProps) => {
 
       <CardFooter className='flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center w-full'>
         <div className='flex items-center gap-2 text-sm'>
-          <QuestionToolTip tooltipInfo="Deleted ID's have been persisted which are filtered out from get user API use clear to empty the catch" />
+          <QuestionToolTip tooltipInfo="Deleted ID's have been persisted which are filtered out from get user API use clear to empty the storage" />
           Clear Persisted Deleted UserId :{" "}
           <Button variant={"outline"} onClick={() => clearDeletedUsers()}>
             Clear
