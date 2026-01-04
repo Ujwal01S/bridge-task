@@ -1,11 +1,12 @@
+import { useCreateUser } from "@/api/hooks/user/use-create-user";
+import { useUpdateUser } from "@/api/hooks/user/use-update-user";
+import SubmitButton from "@/components/commons/custom-button/submit-button";
 import FormikInput from "@/components/commons/formik/formik-input";
 import { Button } from "@/components/ui/button";
 import type { IPickedUser } from "@/interface";
 import { userFormSchema, type UserFormSchemaType } from "@/schema/user-schema";
+import { useUserModalStore } from "@/store/use-user-modal-store";
 import { Form, Formik, type FormikHelpers } from "formik";
-import { Spinner } from "../../ui/spinner";
-import { useUpdateUser } from "@/api/hooks/user/use-update-user";
-import { useCreateUser } from "@/api/hooks/user/use-create-user";
 
 interface Props {
   mode: "create" | "update";
@@ -30,8 +31,9 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
   const { editUser, userEditIsPending } = useUpdateUser();
 
   // create user custom hook
-
   const { createUser, createUserIsPending } = useCreateUser();
+
+  const { closeModal } = useUserModalStore();
 
   const validate = (values: UserFormSchemaType) => {
     const result = userFormSchema.safeParse(values);
@@ -121,18 +123,27 @@ const UserForm = ({ mode, initialValues, submitLabel, id }: Props) => {
             />
           </div>
 
-          <Button
-            type='submit'
-            disabled={isSubmitting || userEditIsPending || createUserIsPending}
-          >
-            {isSubmitting || userEditIsPending || createUserIsPending ? (
-              <div className='flex gap-2 items-center'>
-                <Spinner /> {mode === "create" ? "Creating..." : "Updating"}
-              </div>
-            ) : (
-              submitLabel || (mode === "create" ? "Create" : "Update")
-            )}
-          </Button>
+          <div className='w-full flex gap-3 items-center '>
+            <Button
+              variant={"outline"}
+              type='button'
+              onClick={() => closeModal()}
+              className='flex-1'
+              disabled={
+                isSubmitting || userEditIsPending || createUserIsPending
+              }
+            >
+              Cancel
+            </Button>
+            <SubmitButton
+              disabled={
+                isSubmitting || userEditIsPending || createUserIsPending
+              }
+              mode={mode}
+              submitLabel={submitLabel}
+              className='flex-1'
+            />
+          </div>
         </Form>
       )}
     </Formik>

@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { TriangleAlert } from "lucide-react";
 import { memo } from "react";
 
@@ -37,54 +37,57 @@ const DataTableRender = <TData, TValue>({
   columns,
 }: IProps<TData, TValue>) => {
   return (
-    <div className='flex'>
-      <ScrollArea type='always' className='w-1 flex-1'>
-        <Table>
-          {/* Table header content */}
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-
-          {/* Table Body Part */}
-
-          <TableBody>
-            {table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className='border-gray-400'
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+    <div className='w-full'>
+      <ScrollArea className='w-full'>
+        <div className='min-w-200'>
+          <Table>
+            {/* Table header content */}
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <EmptyTableRow colLength={columns.length} />
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+
+            {/* Table Body Part */}
+
+            <TableBody>
+              {table.getRowModel().rows.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className='border-gray-400'
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <EmptyTableRow colLength={columns.length} />
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <ScrollBar orientation='horizontal' />
       </ScrollArea>
       {/* fallback when all the column are hidden */}
 
