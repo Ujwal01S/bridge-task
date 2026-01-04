@@ -17,6 +17,7 @@ import ViewOptions from "../data-table/view-options";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { Spinner } from "../ui/spinner";
+import UserForm from "../form/user-form/user-form";
 
 interface IProps {
   userData: IPickedUser[];
@@ -66,7 +67,16 @@ const UserTable = ({ userData, isPending, total }: IProps) => {
             value={q}
           />
           <div className='flex items-center gap-3 justify-end py-2'>
-            <Button onClick={() => setOpenModal(undefined, "create")}>
+            <Button
+              onClick={() =>
+                setOpenModal({
+                  id: undefined,
+                  type: "create",
+                  title: "Create User",
+                  content: <UserForm mode='create' />,
+                })
+              }
+            >
               Create User
             </Button>
             <ViewOptions table={table} />

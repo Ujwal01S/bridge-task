@@ -1,3 +1,4 @@
+import UserForm from "@/components/form/user-form/user-form";
 import { Button } from "@/components/ui/button";
 import type { IPickedUser } from "@/interface/user/user.interface";
 import { useDeleteDialogStore } from "@/store/use-dailog-store";
@@ -96,13 +97,29 @@ export const useUserColumn = () => {
         enableHidding: true,
         cell: ({ row }) => {
           const id = row.original.id;
+          const initialValue = row.original;
           return (
             <div className='flex gap-1.5'>
               <button onClick={() => setOpenDeleteDialog(id)}>
                 <Trash2 className='text-red-400' />
               </button>
 
-              <button onClick={() => setOpenModal(id, "edit")}>
+              <button
+                onClick={() =>
+                  setOpenModal({
+                    id,
+                    type: "edit",
+                    title: "Update User",
+                    content: (
+                      <UserForm
+                        mode='update'
+                        id={id}
+                        initialValues={initialValue}
+                      />
+                    ),
+                  })
+                }
+              >
                 <Edit2 className='text-blue-500' />
               </button>
             </div>
